@@ -26,6 +26,8 @@ source-repository head
 library
   exposed-modules:
       Lib
+      Solver
+      Utils
   other-modules:
       Paths_HaskellHidato
   hs-source-dirs:

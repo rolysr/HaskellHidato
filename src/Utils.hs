@@ -23,6 +23,13 @@ updateList a x v =
 dirs :: [[Int]]
 dirs=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]
 
+
+--Position record type
+data Pos = Pos {row :: Int, column :: Int} | NilPos deriving (Show)
+
+--Hidato record type
+data Hidato = Hidato {board :: [[Int]], posMin :: Pos, posMax :: Pos, minValue :: Int, maxValue :: Int, width :: Int, height :: Int} | NilHidato deriving (Show)
+
 validPosition :: Int -> Int -> Int -> Int -> Bool
 validPosition x y n m = x>=0 && x<n && y>=0 && y<m
 

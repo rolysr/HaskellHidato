@@ -74,3 +74,8 @@ bfs mk a = bfs_part2 mk (markPositions mk a)
 ---Function to check if the graph is connected or not
 isConnected :: [[Int]] -> Bool
 isConnected a = full_minus_1_matrix (length a) (length (a!!0)) == bfs (position_distinct_from_minus_1 a 0) a
+#Position record type
+data Pos = nilPos | Pos {row :: Int, column :: Int}
+
+#Hidato record type
+data Hidato = nilHidato | Hidato {board :: [[Int]], posMin :: Pos, posMax :: Pos, minValue :: Int, maxValue :: Int, width :: Int, height :: Int}

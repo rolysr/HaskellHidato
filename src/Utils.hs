@@ -1,4 +1,4 @@
-module Utils (updateMatrix, updateList, dirs, validPosition, full_minus_1_matrix, markPositions, bfs, isConnected) where
+module Utils (updateMatrix, updateList, dirs, validPosition, full_minus_1_matrix, markPositions, bfs, isConnected, Pos, Hidato) where
 import Data.Set (Set)
 import qualified Data.Set as Set
 
@@ -81,3 +81,20 @@ bfs mk a = bfs_part2 mk (markPositions mk a)
 ---Function to check if the graph is connected or not
 isConnected :: [[Int]] -> Bool
 isConnected a = full_minus_1_matrix (length a) (length (a!!0)) == bfs (position_distinct_from_minus_1 a 0) a
+
+find_value :: [[Int]] -> Int -> [Int]
+find_value a v = findValue a v 0
+
+findValue :: [[Int]] -> Int -> Int -> [Int]
+findValue [] v x = []
+findValue a v x = 
+    if findValue_row (head a) v 0 /= []
+        then [x,(findValue_row (head a) v 0)!!0]
+        else findValue (tail a) v (x+1)
+
+findValue_row :: [Int] -> Int -> Int -> [Int]
+findValue_row [] v x = []
+findValue_row (p:ps) v x = 
+    if p == v 
+        then [x]
+        else findValue_row ps v (x+1)

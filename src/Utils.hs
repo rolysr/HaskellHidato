@@ -1,4 +1,4 @@
-module Utils (updateMatrix, updateList, dirs, validPosition, full_minus_1_matrix, markPositions, bfs, isConnected, Pos, Hidato) where
+module Utils (updateMatrix, updateList, dirs, validPosition, number_positions_distinct_from_minus_1, full_minus_1_matrix, markPositions, bfs, isConnected, Pos, Hidato) where
 import Data.Set (Set)
 import qualified Data.Set as Set
 
@@ -98,3 +98,52 @@ findValue_row (p:ps) v x =
     if p == v 
         then [x]
         else findValue_row ps v (x+1)
+
+--Methods for getting the position of maximum and minimum elements of a matrix greater than 0
+getPosMinBoardGZ :: [[Int]] -> Pos
+getPosMinBoardGZ [] = NilPos
+getPosMinBoardGZ l = (Pos (fst p) (snd p)) where m = getMinValueBoardGZ l
+                                                 p = ([(i,j) | i <- [0..((length l)-1)] , j <- [0..((length (l !! 0)) -1)] , l!!i!!j == m] !! 0)
+                                               
+getPosMaxBoardGZ :: [[Int]] -> Pos
+getPosMaxBoardGZ [] = NilPos
+getPosMaxBoardGZ l = (Pos (fst p) (snd p)) where m = getMaxValueBoardGZ l
+                                                 p = ([(i,j) | i <- [0..((length l)-1)] , j <- [0..((length (l !! 0)) -1)] , l!!i!!j == m] !! 0)
+    
+--Methods for getting the maximum and minimum elements of a matrix greater than 0
+getMinValueBoardGZ :: [[Int]] -> Int  
+getMinValueBoardGZ [] = 0
+getMinValueBoardGZ l = minimumGZ (map minimumGZ l)
+
+getMaxValueBoardGZ :: [[Int]] -> Int  
+getMaxValueBoardGZ [] = 0
+getMaxValueBoardGZ l = maximum (map maximum l)
+
+minimumGZ :: [Int] -> Int
+minimumGZ [] = -1
+minimumGZ l | ((length newL) > 0) = (minimum newL)
+            | otherwise = -1
+            where newL = (filter (>0) l)
+
+number_positions_distinct_from_minus_1 :: [[Int]] -> Int
+number_positions_distinct_from_minus_1 [] = 0
+number_positions_distinct_from_minus_1 matrix = sum (filter (>0) (map length (map (filter (>0)) matrix)))
+
+sum_1_positions_distinct_from_minus_1 :: [[Int]] -> [[Int]]
+sum_1_positions_distinct_from_minus_1 [] = []
+sum_1_positions_distinct_from_minus_1 l = map sum_1_to_gz_list l 
+
+sum_1_to_gz_list :: [Int] -> [Int]
+sum_1_to_gz_list [] = []
+sum_1_to_gz_list (x:xs) = (((\x -> if x > 0 then x+1 else x) x) : sum_1_to_gz_list xs)
+
+tryWhileNotGetValidHamBoard :: (Pos -> [[Int]]) -> [Pos] -> Int -> Int -> [[Int]]
+tryWhileNotGetValidHamBoard _ [] n m = (full_minus_1_matrix n m)
+tryWhileNotGetValidHamBoard f (p:ps) n m | (newBoard /= (full_minus_1_matrix n m)) = newBoard
+                                         | otherwise = tryWhileNotGetValidHamBoard f ps n m
+                                         where newBoard = (f p) 
+
+covertListToPosition :: [Int] -> Pos
+covertListToPosition [] = NilPos
+covertListToPosition [x] = NilPos
+covertListToPosition (x:xs) = Pos {row = x, column = (head xs)} 

@@ -1,3 +1,6 @@
+module Solver (
+    solve
+) where
 import Utils
 
 -- Returns 0, 1 or 2 solutions for the hidato puzzle

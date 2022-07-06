@@ -1,4 +1,5 @@
 module Utils (
+    adjacent_positions,
     trd3,
     trd4,
     trd5,
@@ -165,3 +166,6 @@ th4_4 (a,b,c,d) = d
 
 th4_5 :: (a,b,c,d,e) -> d
 th4_5 (a,b,c,d,e) = d
+
+adjacent_positions :: [Int] -> [Int] -> Bool
+adjacent_positions [x0,y0] [x1,y1] = (abs(x0-x1)<=1 && abs(y0-y1)<=1)

@@ -1,4 +1,4 @@
-module Utils (find_value, updateMatrix, updateList, dirs, validPosition, full_minus_1_matrix, markPositions, bfs, isConnected, Pos, Hidato) where
+module Utils (minMat, maxMat, find_value, updateMatrix, updateList, dirs, validPosition, full_minus_1_matrix, markPositions, bfs, isConnected, Pos, Hidato) where
 import Data.Set (Set)
 import qualified Data.Set as Set
 import Prelude

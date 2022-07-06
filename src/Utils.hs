@@ -1,6 +1,34 @@
-module Utils (updateMatrix, updateList, dirs, validPosition, number_positions_distinct_from_minus_1, full_minus_1_matrix, markPositions, bfs, isConnected, Pos, Hidato) where
+module Utils (
+    adjacent_positions,
+    trd3,
+    trd4,
+    trd5,
+    fst3,
+    fst4,
+    fst5,
+    snd3,
+    snd4,
+    snd5,
+    th4_4,
+    th4_5, 
+    minMat, 
+    maxMat, 
+    find_value, 
+    updateMatrix, 
+    updateList, 
+    dirs, 
+    validPosition, 
+    full_minus_1_matrix, 
+    markPositions, 
+    bfs, 
+    isConnected, 
+    Pos, 
+    Hidato) 
+    where
+
 import Data.Set (Set)
 import qualified Data.Set as Set
+import Prelude
 
 updateMatrix :: [[a]] -> Int -> Int -> a -> [[a]]
 updateMatrix a x y v = 
@@ -147,3 +175,47 @@ covertListToPosition :: [Int] -> Pos
 covertListToPosition [] = NilPos
 covertListToPosition [x] = NilPos
 covertListToPosition (x:xs) = Pos {row = x, column = (head xs)} 
+
+maxMat :: [[Int]] -> Int
+maxMat [] = -1000000
+maxMat a = maximum [(maximum (a!!i)) | i<-[0..((length a)-1)]]
+
+minMat :: [[Int]] -> Int
+minMat [] = 1000000
+minMat a = minimum [(minimum (a!!i)) | i<-[0..((length a)-1)]]
+
+fst3 :: (a,b,c) -> a
+fst3 (a,b,c) = a
+
+fst4 :: (a,b,c,d) -> a
+fst4 (a,b,c,d) = a
+
+fst5 :: (a,b,c,d,e) -> a
+fst5 (a,b,c,d,e) = a
+
+snd3 :: (a,b,c) -> b
+snd3 (a,b,c) = b
+
+snd4 :: (a,b,c,d) -> b
+snd4 (a,b,c,d) = b
+
+snd5 :: (a,b,c,d,e) -> b
+snd5 (a,b,c,d,e) = b
+
+trd3 :: (a,b,c) -> c
+trd3 (a,b,c) = c
+
+trd4 :: (a,b,c,d) -> c
+trd4 (a,b,c,d) = c
+
+trd5 :: (a,b,c,d,e) -> c
+trd5 (a,b,c,d,e) = c
+
+th4_4 :: (a,b,c,d) -> d
+th4_4 (a,b,c,d) = d
+
+th4_5 :: (a,b,c,d,e) -> d
+th4_5 (a,b,c,d,e) = d
+
+adjacent_positions :: [Int] -> [Int] -> Bool
+adjacent_positions [x0,y0] [x1,y1] = (abs(x0-x1)<=1 && abs(y0-y1)<=1)

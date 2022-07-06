@@ -1,4 +1,29 @@
-module Utils (minMat, maxMat, find_value, updateMatrix, updateList, dirs, validPosition, full_minus_1_matrix, markPositions, bfs, isConnected, Pos, Hidato) where
+module Utils (
+    trd3,
+    trd4,
+    trd5,
+    fst3,
+    fst4,
+    fst5,
+    snd3,
+    snd4,
+    snd5,
+    th4_4,
+    th4_5, 
+    minMat, 
+    maxMat, 
+    find_value, 
+    updateMatrix, 
+    updateList, 
+    dirs, 
+    validPosition, 
+    full_minus_1_matrix, 
+    markPositions, 
+    bfs, 
+    isConnected, 
+    Pos, 
+    Hidato) 
+    where
 import Data.Set (Set)
 import qualified Data.Set as Set
 import Prelude
@@ -107,3 +132,36 @@ maxMat a = maximum [(maximum (a!!i)) | i<-[0..((length a)-1)]]
 minMat :: [[Int]] -> Int
 minMat [] = 1000000
 minMat a = minimum [(minimum (a!!i)) | i<-[0..((length a)-1)]]
+
+fst3 :: (a,b,c) -> a
+fst3 (a,b,c) = a
+
+fst4 :: (a,b,c,d) -> a
+fst4 (a,b,c,d) = a
+
+fst5 :: (a,b,c,d,e) -> a
+fst5 (a,b,c,d,e) = a
+
+snd3 :: (a,b,c) -> b
+snd3 (a,b,c) = b
+
+snd4 :: (a,b,c,d) -> b
+snd4 (a,b,c,d) = b
+
+snd5 :: (a,b,c,d,e) -> b
+snd5 (a,b,c,d,e) = b
+
+trd3 :: (a,b,c) -> c
+trd3 (a,b,c) = c
+
+trd4 :: (a,b,c,d) -> c
+trd4 (a,b,c,d) = c
+
+trd5 :: (a,b,c,d,e) -> c
+trd5 (a,b,c,d,e) = c
+
+th4_4 :: (a,b,c,d) -> d
+th4_4 (a,b,c,d) = d
+
+th4_5 :: (a,b,c,d,e) -> d
+th4_5 (a,b,c,d,e) = d

@@ -1,6 +1,7 @@
-module Utils (updateMatrix, updateList, dirs, validPosition, full_minus_1_matrix, markPositions, bfs, isConnected, Pos, Hidato) where
+module Utils (find_value, updateMatrix, updateList, dirs, validPosition, full_minus_1_matrix, markPositions, bfs, isConnected, Pos, Hidato) where
 import Data.Set (Set)
 import qualified Data.Set as Set
+import Prelude
 
 updateMatrix :: [[a]] -> Int -> Int -> a -> [[a]]
 updateMatrix a x y v = 
@@ -98,3 +99,11 @@ findValue_row (p:ps) v x =
     if p == v 
         then [x]
         else findValue_row ps v (x+1)
+
+maxMat :: [[Int]] -> Int
+maxMat [] = -1000000
+maxMat a = maximum [(maximum (a!!i)) | i<-[0..((length a)-1)]]
+
+minMat :: [[Int]] -> Int
+minMat [] = 1000000
+minMat a = minimum [(minimum (a!!i)) | i<-[0..((length a)-1)]]

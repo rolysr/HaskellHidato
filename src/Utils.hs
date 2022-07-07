@@ -22,13 +22,26 @@ module Utils (
     markPositions, 
     bfs, 
     isConnected, 
-    Pos, 
-    Hidato) 
+    Pos(..), 
+    Hidato(..),
+    getPosMinBoardGZ,
+    getPosMaxBoardGZ,
+    getMinValueBoardGZ,
+    getMaxValueBoardGZ,
+    number_positions_distinct_from_minus_1,
+    sum_1_positions_distinct_from_minus_1,
+    tryWhileNotGetValidHamBoard,
+    covertListToPosition,
+    adjacents_avaliable_single,
+    full_k_matrix,
+    printList,
+    printMatrix) 
     where
 
 import Data.Set (Set)
 import qualified Data.Set as Set
 import Prelude
+import System.Random
 
 updateMatrix :: [[a]] -> Int -> Int -> a -> [[a]]
 updateMatrix a x y v = 
@@ -65,6 +78,16 @@ full_minus_1_matrix n m =
     [
         [
             -1
+            | j<-[0..(m-1)]
+        ]
+        | i<-[0..(n-1)]
+    ]
+
+full_k_matrix :: Int -> Int -> Int -> [[Int]]
+full_k_matrix n m k = 
+    [
+        [
+            k
             | j<-[0..(m-1)]
         ]
         | i<-[0..(n-1)]
@@ -219,3 +242,11 @@ th4_5 (a,b,c,d,e) = d
 
 adjacent_positions :: [Int] -> [Int] -> Bool
 adjacent_positions [x0,y0] [x1,y1] = (abs(x0-x1)<=1 && abs(y0-y1)<=1)
+
+printMatrix ::(Show a) => [[a]] -> [Char]
+printMatrix [] = ""
+printMatrix (x:xs) = printList x ++ "\n" ++ (printMatrix xs)
+
+printList :: (Show a) => [a] -> [Char]
+printList [] = ""
+printList (x:xs) = (show x) ++ " " ++ (printList xs)

@@ -35,6 +35,8 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , containers
+    , random
   default-language: Haskell2010
 
 executable HaskellHidato-exe
@@ -47,6 +49,8 @@ executable HaskellHidato-exe
   build-depends:
       HaskellHidato
     , base >=4.7 && <5
+    , containers
+    , random
   default-language: Haskell2010
 
 test-suite HaskellHidato-test
@@ -60,4 +64,6 @@ test-suite HaskellHidato-test
   build-depends:
       HaskellHidato
     , base >=4.7 && <5
+    , containers
+    , random
   default-language: Haskell2010

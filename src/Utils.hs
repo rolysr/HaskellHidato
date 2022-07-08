@@ -35,7 +35,11 @@ module Utils (
     adjacents_avaliable_single,
     full_k_matrix,
     printList,
-    printMatrix) 
+    printMatrix,
+    deletePositionRandomWhileUniqueSolution,
+    validHidatoPositionsToDelete,
+    selectRandomPosFrom,
+    deletePositionFrom) 
     where
 
 import Data.Set (Set)
@@ -65,7 +69,7 @@ dirs :: [[Int]]
 dirs=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]
 
 --Position record type
-data Pos = Pos {row :: Int, column :: Int} | NilPos deriving (Show)
+data Pos = Pos {row :: Int, column :: Int} | NilPos deriving (Show, Eq)
 
 --Hidato record type
 data Hidato = Hidato {board :: [[Int]], posMin :: Pos, posMax :: Pos, minValue :: Int, maxValue :: Int, width :: Int, height :: Int} | NilHidato deriving (Show)
@@ -250,3 +254,29 @@ printMatrix (x:xs) = printList x ++ "\n" ++ (printMatrix xs)
 printList :: (Show a) => [a] -> [Char]
 printList [] = ""
 printList (x:xs) = (show x) ++ " " ++ (printList xs)
+
+validHidatoPositionsToDelete :: [[Int]] -> [Pos]
+validHidatoPositionsToDelete [] = []
+validHidatoPositionsToDelete board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length board)-1)], board!!i!!j /= -1, board!!i!!j /= 0]
+
+seed::Int
+seed = 40
+generator = mkStdGen seed
+
+selectRandomPosFrom :: [Pos] -> Pos
+selectRandomPosFrom [] = NilPos
+selectRandomPosFrom positions = positions !! rand where
+  n = length positions
+  (rand, _) = randomR (0,(n-1)) generator
+
+deletePositionFrom :: [Pos] -> Pos -> [Pos]
+deletePositionFrom [] _ = []
+deletePositionFrom positions pos = [p | p <- positions, p /= pos]
+
+deletePositionRandomWhileUniqueSolution :: [[Int]] -> [Pos] -> [[Int]]
+deletePositionRandomWhileUniqueSolution [] _ = []
+deletePositionRandomWhileUniqueSolution board positions | length (solve newBoard) == 1 = (deletePositionRandomWhileUniqueSolution newBoard newPositions)
+                                                        | otherwise = board
+                                                        where newp = selectRandomPosFrom positions
+                                                              newBoard = (updateMatrix board (row newp) (column newp) 0)
+                                                              newPositions = deletePositionFrom positions newp

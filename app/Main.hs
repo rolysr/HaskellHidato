@@ -15,13 +15,25 @@ main = do
                 putStrLn "Option 1 selected. Please enter two integers (one by line) representing the hidato's dimensions in rows and columns...";
                 n <- getLine;
                 m <- getLine;
-                let{board = full_k_matrix (read n) (read m) 0};  
-                putStrLn (printMatrix board)  
+                let{boardNM = full_k_matrix (read n) (read m) 0};  
+                let{solvedHidato = generateSolvedHidato boardNM};
+                let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
+                putStrLn "The hidato unsolved that was generated is:\n"
+                putStrLn (printMatrix (board uniqueSolutionHidato))
+                putStrLn "\nThe hidato is solved like this:"
+                putStrLn (printMatrix (board solvedHidato))
             }
              
     else if option == "2" 
         then do 
             putStrLn "Option 2 selected. Parsing the custom hidato from hidato.txt file..."
+            let{boardNM = ParseHidatoFromFile "hidato.txt"};  
+            let{solvedHidato = generateSolvedHidato boardNM};
+            let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
+            putStrLn "The parsed hidato unsolved that was generated is:\n"
+            putStrLn (printMatrix (board uniqueSolutionHidato))
+            putStrLn "\nThe hidato is solved like this:"
+            putStrLn (printMatrix (board solvedHidato))
     else
         putStrLn "Invalid option!"
     

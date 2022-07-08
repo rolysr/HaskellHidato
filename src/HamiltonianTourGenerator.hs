@@ -1,6 +1,7 @@
 module HamiltonianTourGenerator (
     generateSolvedHidato, 
     hamiltonianPath,
+    generateHidatoWithUniqueSolution,
 ) where
 import Utils
 
@@ -25,4 +26,6 @@ hamiltonianPath board n m p | ( (not (isConnected board))) || board == (full_min
                             where newBoard = (updateMatrix board (row p) (column p) (-1))
                                   possibleAdyacents = map covertListToPosition (adjacents_avaliable_single [(row p), (column p)] board dirs)
 
---generateHidatoWithUniqueSolution :: Hidato -> Hidato
+generateHidatoWithUniqueSolution :: Hidato -> Hidato
+generateHidatoWithUniqueSolution NilHidato = NilHidato
+generateHidatoWithUniqueSolution h = (deletePositionRandomWhileUniqueSolution (board h) positions) where position = validHidatoPositionsToDelete (board h)

@@ -275,4 +275,10 @@ deletePositionFrom [] _ = []
 deletePositionFrom positions pos = [p | p <- positions, p /= pos]
 
 matrixToHidato :: [[Int]] -> Hidato
-matrixToHidato a = NilHidato
+matrixToHidato a = Hidato {board = a, 
+                        posMin = (getPosMinBoardGZ a), 
+                        posMax = (getPosMaxBoardGZ a), 
+                        minValue = (getMinValueBoardGZ a), 
+                        maxValue = (getMaxValueBoardGZ a), 
+                        width = length (a!!0), 
+                        height = length a}

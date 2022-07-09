@@ -4,6 +4,7 @@ module HamiltonianTourGenerator (
     generateHidatoWithUniqueSolution,
 ) where
 import Utils
+import Solver
 
 --Returns if possible a Hidato with a board as a Hamiltonian path starting at a given position given the size of the matrix
 generateSolvedHidato :: [[Int]] -> Int -> Int -> Pos -> Hidato
@@ -28,4 +29,13 @@ hamiltonianPath board n m p | ( (not (isConnected board))) || board == (full_min
 
 generateHidatoWithUniqueSolution :: Hidato -> Hidato
 generateHidatoWithUniqueSolution NilHidato = NilHidato
-generateHidatoWithUniqueSolution h = (deletePositionRandomWhileUniqueSolution (board h) positions) where position = validHidatoPositionsToDelete (board h)
+generateHidatoWithUniqueSolution h = matrixToHidato ((deletePositionRandomWhileUniqueSolution (board h) positions)) where positions = validHidatoPositionsToDelete (board h)
+
+
+deletePositionRandomWhileUniqueSolution :: [[Int]] -> [Pos] -> [[Int]]
+deletePositionRandomWhileUniqueSolution [] _ = []
+deletePositionRandomWhileUniqueSolution board positions | (length (solve newBoard) == 1) = (deletePositionRandomWhileUniqueSolution newBoard newPositions)
+                                                        | otherwise = board
+                                                        where newp = selectRandomPosFrom positions
+                                                              newBoard = (updateMatrix board (row newp) (column newp) 0)
+                                                              newPositions = deletePositionFrom positions newp

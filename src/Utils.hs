@@ -36,10 +36,10 @@ module Utils (
     full_k_matrix,
     printList,
     printMatrix,
-    deletePositionRandomWhileUniqueSolution,
     validHidatoPositionsToDelete,
     selectRandomPosFrom,
-    deletePositionFrom) 
+    deletePositionFrom,
+    matrixToHidato) 
     where
 
 import Data.Set (Set)
@@ -257,7 +257,8 @@ printList (x:xs) = (show x) ++ " " ++ (printList xs)
 
 validHidatoPositionsToDelete :: [[Int]] -> [Pos]
 validHidatoPositionsToDelete [] = []
-validHidatoPositionsToDelete board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length board)-1)], board!!i!!j /= -1, board!!i!!j /= 0]
+validHidatoPositionsToDelete board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length board)-1)], board!!i!!j /= -1, board!!i!!j /= 0, board!!i!!j /= maxValue] 
+    where maxValue = maxMat board
 
 seed::Int
 seed = 40
@@ -273,10 +274,5 @@ deletePositionFrom :: [Pos] -> Pos -> [Pos]
 deletePositionFrom [] _ = []
 deletePositionFrom positions pos = [p | p <- positions, p /= pos]
 
-deletePositionRandomWhileUniqueSolution :: [[Int]] -> [Pos] -> [[Int]]
-deletePositionRandomWhileUniqueSolution [] _ = []
-deletePositionRandomWhileUniqueSolution board positions | length (solve newBoard) == 1 = (deletePositionRandomWhileUniqueSolution newBoard newPositions)
-                                                        | otherwise = board
-                                                        where newp = selectRandomPosFrom positions
-                                                              newBoard = (updateMatrix board (row newp) (column newp) 0)
-                                                              newPositions = deletePositionFrom positions newp
+matrixToHidato :: [[Int]] -> Hidato
+matrixToHidato a = NilHidato

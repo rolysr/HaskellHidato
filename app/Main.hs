@@ -19,15 +19,15 @@ main = do
                 let{equalTo0 = positionsEqualTo0 boardNM};
                 let{p = selectRandomPosFrom equalTo0};
                 let{solvedHidato = tryGenerateSolvedHidato boardNM (validHidatoPositions boardNM)};
-                if solvedHidato == full_minus_1_matrix n m 
+                if solvedHidato == (full_minus_1_matrix (read n) (read m)) 
                     then 
                         putStrLn "It's not possible to construct the Hidato"
                 else do
-                    let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
+                    let{uniqueSolutionHidato = generateHidatoWithUniqueSolution (matrixToHidato solvedHidato)};
                     putStrLn "The hidato unsolved that was generated is:\n";
                     putStrLn (printMatrix (board uniqueSolutionHidato));
                     putStrLn "\nThe hidato is solved like this:\n";
-                    putStrLn (printMatrix (board solvedHidato));
+                    putStrLn (printMatrix solvedHidato);
             }
 
     else if option == "2" 
@@ -36,16 +36,16 @@ main = do
             (n,m,boardNM) <- parse;
             let{equalTo0 = positionsEqualTo0 boardNM};
             let{p = selectRandomPosFrom equalTo0};
-            let{solvedHidato = generateSolvedHidato boardNM (length boardNM) (length (boardNM!!0)) p};
-            if solvedHidato == full_minus_1_matrix n m 
+            let{solvedHidato = tryGenerateSolvedHidato boardNM (validHidatoPositions boardNM)};
+            if solvedHidato == (full_minus_1_matrix n m) 
                 then 
                     putStrLn "It's not possible to construct the Hidato"
             else do
-                let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
+                let{uniqueSolutionHidato = generateHidatoWithUniqueSolution (matrixToHidato solvedHidato)};
                 putStrLn "The hidato unsolved that was generated is:\n";
                 putStrLn (printMatrix (board uniqueSolutionHidato));
                 putStrLn "\nThe hidato is solved like this:\n";
-                putStrLn (printMatrix (board solvedHidato));
+                putStrLn (printMatrix solvedHidato);
     else
         putStrLn "Invalid option!"
     

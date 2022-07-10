@@ -39,13 +39,17 @@ module Utils (
     validHidatoPositionsToDelete,
     selectRandomPosFrom,
     deletePositionFrom,
-    matrixToHidato) 
+    matrixToHidato,
+    readMany,
+    parse) 
     where
 
 import Data.Set (Set)
 import qualified Data.Set as Set
 import Prelude
 import System.Random
+import Control.Monad (replicateM)
+
 
 updateMatrix :: [[a]] -> Int -> Int -> a -> [[a]]
 updateMatrix a x y v = 
@@ -282,3 +286,14 @@ matrixToHidato a = Hidato {board = a,
                         maxValue = (getMaxValueBoardGZ a), 
                         width = length (a!!0), 
                         height = length a}
+
+-- Read space seperated words on a line from stdin
+readMany :: Read a => IO [a]
+readMany = fmap (map read . words) getLine
+
+parse :: IO (Int, Int, [Int], [[Int]])
+parse = do
+    [m, n] <- readMany
+    ks     <- readMany
+    xss    <- replicateM m readMany
+    return (m, n, ks, xss)

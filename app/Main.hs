@@ -7,7 +7,7 @@ main = do
     putStrLn "---------------------------------------------------"
     putStrLn "Welcome to the Haskell Hidato Solver and Generator!"
     putStrLn "---------------------------------------------------\n"
-    putStrLn "Do you want to generate and solve a random rectangular hidato (1) or a custom one (2) parsed from a hidato.txt located at the same folder of this program executable? Please enter a number according to an option:"
+    putStrLn "Do you want to generate and solve a random rectangular hidato (1) or a custom one (2) parsed from stdin? Please enter a number according to an option:"
     option <- getLine
     if option == "1" 
         then do
@@ -26,8 +26,8 @@ main = do
              
     else if option == "2" 
         then do 
-            putStrLn "Option 2 selected. Parsing the custom hidato from hidato.txt file..."
-            let{boardNM = ParseHidatoFromFile "hidato.txt"};  
+            putStrLn "Option 2 selected. Parsing the custom hidato from stdin..."
+            boardNM    <- replicateM m readMany  
             let{solvedHidato = generateSolvedHidato boardNM};
             let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
             putStrLn "The parsed hidato unsolved that was generated is:\n"

@@ -2,7 +2,7 @@ module HamiltonianTourGenerator (
     generateSolvedHidato, 
     hamiltonianPath,
     generateHidatoWithUniqueSolution,
-    tryGenerateSolvedHidatoFromValidPositions,
+    tryGenerateSolvedHidato,
 ) where
 import Utils
 import Solver
@@ -39,8 +39,10 @@ deletePositionRandomWhileUniqueSolution board positions | (length (solve newBoar
                                                               newBoard = (updateMatrix board (row newp) (column newp) 0)
                                                               newPositions = deletePositionFrom positions newp
 
-tryGenerateSolvedHidatoFromValidPositions :: [[Int]] -> [Pos] -> [[Int]]
-tryGenerateSolvedHidatoFromValidPositions [] _ = []
-tryGenerateSolvedHidatoFromValidPositions board (p:ps) | length positions == 0 = full_minus_1_matrix (length board) (length board!!0)
-                                                          | (generateSolvedHidato board (length board) (length board!!0) p) /= full_minus_1_matrix = newBoard
-                                                          | otherwise = tryGenerateSolvedHidatoFromValidPositions board ps
+tryGenerateSolvedHidato :: [[Int]] -> [Pos] -> [[Int]]
+tryGenerateSolvedHidato [] _ = []
+tryGenerateSolvedHidato matrix (p:ps) | length positions == 0 = full_minus_1_matrix (length matrix) (length (matrix!!0))
+                                                          | (board newBoard) /= (full_minus_1_matrix (length matrix) (length (matrix!!0))) = (board newBoard)
+                                                          | otherwise = tryGenerateSolvedHidato matrix ps
+                                                          where positions = validHidatoPositions matrix
+                                                                newBoard = (generateSolvedHidato matrix (length matrix) (length (matrix!!0)) p)

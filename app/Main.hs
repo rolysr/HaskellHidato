@@ -22,7 +22,7 @@ main = do
                 if solvedHidato == full_minus_1_matrix n m 
                     then 
                         putStrLn "It's not possible to construct the Hidato"
-                else
+                else do
                     let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
                     putStrLn "The hidato unsolved that was generated is:\n";
                     putStrLn (printMatrix (board uniqueSolutionHidato));
@@ -40,7 +40,7 @@ main = do
             if solvedHidato == full_minus_1_matrix n m 
                 then 
                     putStrLn "It's not possible to construct the Hidato"
-            else
+            else do
                 let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
                 putStrLn "The hidato unsolved that was generated is:\n";
                 putStrLn (printMatrix (board uniqueSolutionHidato));

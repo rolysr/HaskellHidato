@@ -80,7 +80,7 @@ data Pos = Pos {row :: Int, column :: Int} | NilPos deriving (Show, Eq)
 data Hidato = Hidato {board :: [[Int]], posMin :: Pos, posMax :: Pos, minValue :: Int, maxValue :: Int, width :: Int, height :: Int} | NilHidato deriving (Show)
 
 validPosition :: Int -> Int -> Int -> Int -> Bool
-validPosition x y n m = x>=0 && x<n && y>=0 && y<m
+validPosition x y n m = (x>=0) && (x<n) && (y>=0) && (y<m)
 
 full_minus_1_matrix :: Int -> Int -> [[Int]]
 full_minus_1_matrix n m = 

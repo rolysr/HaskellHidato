@@ -17,8 +17,7 @@ main = do
                 m <- getLine;
                 let{boardNM = full_k_matrix (read n) (read m) 0};  
                 let{equalTo0 = positionsEqualTo0 boardNM};
-                let{p = selectRandomPosFrom equalTo0};
-                let{solvedHidato = tryGenerateSolvedHidato boardNM (positionsEqualTo0 boardNM)};
+                let{solvedHidato = tryGenerateSolvedHidato boardNM equalTo0};
                 if solvedHidato == (full_minus_1_matrix (read n) (read m)) 
                     then 
                         putStrLn "It's not possible to construct the Hidato"
@@ -35,8 +34,7 @@ main = do
             putStrLn "Option 2 selected. Parsing the custom hidato from stdin..."
             (n,m,boardNM) <- parse;
             let{equalTo0 = positionsEqualTo0 boardNM};
-            let{p = selectRandomPosFrom equalTo0};
-            let{solvedHidato = tryGenerateSolvedHidato boardNM (positionsEqualTo0 boardNM)};
+            let{solvedHidato = tryGenerateSolvedHidato boardNM equalTo0};
             if solvedHidato == (full_minus_1_matrix n m) 
                 then 
                     putStrLn "It's not possible to construct the Hidato"

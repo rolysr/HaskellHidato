@@ -1,5 +1,6 @@
 module Utils (
     adjacent_positions,
+    positionsEqualTo0,
     trd3,
     trd4,
     trd5,
@@ -253,7 +254,7 @@ adjacent_positions [x0,y0] [x1,y1] = (abs(x0-x1)<=1 && abs(y0-y1)<=1)
 
 printMatrix ::(Show a) => [[a]] -> [Char]
 printMatrix [] = ""
-printMatrix (x:xs) = printList x ++ "\n" ++ (printMatrix xs)
+printMatrix (x:xs) = (printList x) ++ "\n" ++ (printMatrix xs)
 
 printList :: (Show a) => [a] -> [Char]
 printList [] = ""
@@ -261,8 +262,12 @@ printList (x:xs) = (show x) ++ " " ++ (printList xs)
 
 validHidatoPositionsToDelete :: [[Int]] -> [Pos]
 validHidatoPositionsToDelete [] = []
-validHidatoPositionsToDelete board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length board)-1)], board!!i!!j /= -1, board!!i!!j /= 0, board!!i!!j /= maxValue] 
+validHidatoPositionsToDelete board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length (board!!0))-1)], board!!i!!j /= -1, board!!i!!j /= 0, board!!i!!j /= maxValue] 
     where maxValue = maxMat board
+
+positionsEqualTo0 :: [[Int]] -> [Pos]
+positionsEqualTo0 [] = []
+positionsEqualTo0 board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length (board!!0))-1)], board!!i!!j == 0] 
 
 seed::Int
 seed = 40

@@ -16,13 +16,16 @@ main = do
                 n <- getLine;
                 m <- getLine;
                 let{boardNM = full_k_matrix (read n) (read m) 0};  
-                let{distinctFrom0 = validHidatoPositionsToDelete boardNM};
-                let{p = selectRandomPosFrom distinctFrom0};
+                let{equalTo0 = positionsEqualTo0 boardNM};
+                let{p = selectRandomPosFrom equalTo0};
+                putStrLn (show p);
+                putStrLn (show boardNM);
                 let{solvedHidato = generateSolvedHidato boardNM (read n) (read m) p};
+                putStrLn (show solvedHidato);
                 let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
                 putStrLn "The hidato unsolved that was generated is:\n";
                 putStrLn (printMatrix (board uniqueSolutionHidato));
-                putStrLn "\nThe hidato is solved like this:";
+                putStrLn "\nThe hidato is solved like this:\n";
                 putStrLn (printMatrix (board solvedHidato));
             }
 
@@ -36,7 +39,7 @@ main = do
             let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
             putStrLn "The parsed hidato unsolved that was generated is:\n";
             putStrLn (printMatrix (board uniqueSolutionHidato));
-            putStrLn "\nThe hidato is solved like this:";
+            putStrLn "\nThe hidato is solved like this:\n";
             putStrLn (printMatrix (board solvedHidato));
     else
         putStrLn "Invalid option!"

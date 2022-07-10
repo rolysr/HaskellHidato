@@ -30,8 +30,8 @@ main = do
         then do 
             putStrLn "Option 2 selected. Parsing the custom hidato from stdin..."
             (n,m,boardNM) <- parse;
-            let{distinctFrom0 = validHidatoPositionsToDelete boardNM};
-            let{p = selectRandomPosFrom distinctFrom0};
+            let{equalTo0 = positionsEqualTo0 boardNM};
+            let{p = selectRandomPosFrom equalTo0};
             let{solvedHidato = generateSolvedHidato boardNM (length boardNM) (length (boardNM!!0)) p};
             let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
             putStrLn "The parsed hidato unsolved that was generated is:\n";

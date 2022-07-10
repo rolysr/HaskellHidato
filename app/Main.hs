@@ -7,7 +7,7 @@ main = do
     putStrLn "---------------------------------------------------"
     putStrLn "Welcome to the Haskell Hidato Solver and Generator!"
     putStrLn "---------------------------------------------------\n"
-    putStrLn "Do you want to generate and solve a random rectangular hidato (1) or a custom one (2) parsed from stdin? Please enter a number according to an option:"
+    putStrLn "Do you want to generate and solve \n(1) a random rectangular hidato \n(2) a custom one parsed from stdin\n(3) just solve a given hidato provided by you or\n(4) just generate a hidato given the grid? \nPlease enter a number according to an option:"
     option <- getLine
     if option == "1" 
         then do
@@ -31,7 +31,7 @@ main = do
 
     else if option == "2" 
         then do 
-            putStrLn "Option 2 selected. Parsing the custom hidato from stdin..."
+            putStrLn "Option 2 selected. Parsing the custom hidato grid from stdin..."
             (n,m,boardNM) <- parse;
             let{equalTo0 = positionsEqualTo0 boardNM};
             let{solvedHidato = tryGenerateSolvedHidato boardNM equalTo0};
@@ -44,6 +44,31 @@ main = do
                 putStrLn (printMatrix (board uniqueSolutionHidato));
                 putStrLn "\nThe hidato is solved like this:\n";
                 putStrLn (printMatrix solvedHidato);
+    else if option == "3" 
+        then do 
+            putStrLn "Option 3 selected. Parsing the custom hidato from stdin..."
+            (n,m,boardNM) <- parse;
+            let{equalTo0 = positionsEqualTo0 boardNM};
+            let{hidatoSols = solve boardNM};
+            if (length hidatoSols) == 0
+                then 
+                    putStrLn "It's not possible to solve the given Hidato"
+            else
+                putStrLn "\nThe hidato is solved like this:\n";
+                putStrLn (printMatrix (hidatoSols!!0));
+    else if option == "4" 
+        then do 
+            putStrLn "Option 4 selected. Parsing the custom hidato grid from stdin..."
+            (n,m,boardNM) <- parse;
+            let{equalTo0 = positionsEqualTo0 boardNM};
+            let{solvedHidato = tryGenerateSolvedHidato boardNM equalTo0};
+            if solvedHidato == (full_minus_1_matrix n m) 
+                then 
+                    putStrLn "It's not possible to construct the Hidato"
+            else do
+                let{uniqueSolutionHidato = generateHidatoWithUniqueSolution (matrixToHidato solvedHidato)};
+                putStrLn "The hidato unsolved that was generated is:\n";
+                putStrLn (printMatrix (board uniqueSolutionHidato));
     else
         putStrLn "Invalid option!"
     

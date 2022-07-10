@@ -291,9 +291,8 @@ matrixToHidato a = Hidato {board = a,
 readMany :: Read a => IO [a]
 readMany = fmap (map read . words) getLine
 
-parse :: IO (Int, Int, [Int], [[Int]])
+parse :: IO (Int, Int, [[Int]])
 parse = do
     [m, n] <- readMany
-    ks     <- readMany
     xss    <- replicateM m readMany
-    return (m, n, ks, xss)
+    return (m, n, xss)

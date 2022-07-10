@@ -16,24 +16,28 @@ main = do
                 n <- getLine;
                 m <- getLine;
                 let{boardNM = full_k_matrix (read n) (read m) 0};  
-                let{solvedHidato = generateSolvedHidato boardNM};
+                let{distinctFrom0 = validHidatoPositionsToDelete boardNM};
+                let{p = selectRandomPosFrom distinctFrom0};
+                let{solvedHidato = generateSolvedHidato boardNM (read n) (read m) p};
                 let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
-                putStrLn "The hidato unsolved that was generated is:\n"
-                putStrLn (printMatrix (board uniqueSolutionHidato))
-                putStrLn "\nThe hidato is solved like this:"
-                putStrLn (printMatrix (board solvedHidato))
+                putStrLn "The hidato unsolved that was generated is:\n";
+                putStrLn (printMatrix (board uniqueSolutionHidato));
+                putStrLn "\nThe hidato is solved like this:";
+                putStrLn (printMatrix (board solvedHidato));
             }
-             
+
     else if option == "2" 
         then do 
             putStrLn "Option 2 selected. Parsing the custom hidato from stdin..."
-            boardNM    <- replicateM m readMany  
-            let{solvedHidato = generateSolvedHidato boardNM};
+            (n,m,boardNM) <- parse;
+            let{distinctFrom0 = validHidatoPositionsToDelete boardNM};
+            let{p = selectRandomPosFrom distinctFrom0};
+            let{solvedHidato = generateSolvedHidato boardNM (length boardNM) (length (boardNM!!0)) p};
             let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
-            putStrLn "The parsed hidato unsolved that was generated is:\n"
-            putStrLn (printMatrix (board uniqueSolutionHidato))
-            putStrLn "\nThe hidato is solved like this:"
-            putStrLn (printMatrix (board solvedHidato))
+            putStrLn "The parsed hidato unsolved that was generated is:\n";
+            putStrLn (printMatrix (board uniqueSolutionHidato));
+            putStrLn "\nThe hidato is solved like this:";
+            putStrLn (printMatrix (board solvedHidato));
     else
         putStrLn "Invalid option!"
     

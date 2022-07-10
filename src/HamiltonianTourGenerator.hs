@@ -10,13 +10,7 @@ import Solver
 generateSolvedHidato :: [[Int]] -> Int -> Int -> Pos -> Hidato
 generateSolvedHidato [] _ _ _ = NilHidato
 generateSolvedHidato matrix n m p | (hamiltonian_path_board) == (full_minus_1_matrix n m) = NilHidato
-                                  | otherwise = Hidato {board = hamiltonian_path_board, 
-                                                        posMin = (getPosMinBoardGZ hamiltonian_path_board), 
-                                                        posMax = (getPosMaxBoardGZ hamiltonian_path_board), 
-                                                        minValue = (getMinValueBoardGZ hamiltonian_path_board), 
-                                                        maxValue = (getMaxValueBoardGZ hamiltonian_path_board), 
-                                                        width = m, 
-                                                        height = n}
+                                  | otherwise = (matrixToHidato hamiltonian_path_board)
                                   where hamiltonian_path_board = (hamiltonianPath matrix n m p)
 --Generate a hamiltonian path in
 hamiltonianPath :: [[Int]] -> Int -> Int -> Pos -> [[Int]]

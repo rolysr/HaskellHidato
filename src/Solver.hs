@@ -26,7 +26,7 @@ phases_solve :: [(Int,[Int],[Int])] -> [[Int]] -> [[[Int]]]
 phases_solve phases a = backtrack (snd3 (phases!!0)) (trd3 (phases!!0)) 0 phases a 0
 
 less_than_x_to_minus_1 :: [[Int]] -> Int -> [[Int]]
-less_than_x_to_minus_1 a x = [[ if (a!!i!!j)<x then -1 else (a!!i!!j) |j<-[0..((length (a!!0))-1)]]|i<-[0..((length a)-1)]]
+less_than_x_to_minus_1 a x = [[ if ((a!!i!!j)/=0 && (a!!i!!j)<x) then -1 else (a!!i!!j) |j<-[0..((length (a!!0))-1)]]|i<-[0..((length a)-1)]]
 
 -- Tries to backtrack in every possible direction
 try_all :: [Int] -> [Int] -> Int -> [(Int,[Int],[Int])] -> [[Int]] -> Int -> [[Int]] -> [[[Int]]]
@@ -34,7 +34,7 @@ try_all [x0,y0] [x1,y1] index phases a total_solutions [] = []
 try_all [x0,y0] [x1,y1] index phases a total_solutions ([dx,dy]:dir_s) = do
     let x = x0+dx
     let y = y0+dy
-    if (validPosition x y (length a) (length (a!!0))) && ((a!!x!!y)==0)
+    if total_solutions==2 || ((validPosition x y (length a) (length (a!!0))) && ((a!!x!!y)==0))
         then do 
             let solutions = backtrack [x,y] [x1,y1] index phases (updateMatrix a x y ((a!!x0!!y0)+1)) total_solutions 
             solutions ++ (try_all [x0,y0] [x1,y1] index phases a (total_solutions+(length solutions)) dir_s)

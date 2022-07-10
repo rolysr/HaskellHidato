@@ -187,7 +187,7 @@ minimumGZ l | ((length newL) > 0) = (minimum newL)
 
 number_positions_distinct_from_minus_1 :: [[Int]] -> Int
 number_positions_distinct_from_minus_1 [] = 0
-number_positions_distinct_from_minus_1 matrix = sum (filter (>0) (map length (map (filter (>0)) matrix)))
+number_positions_distinct_from_minus_1 matrix = sum (filter (>=0) (map length (map (filter (>=0)) matrix)))
 
 sum_1_positions_distinct_from_minus_1 :: [[Int]] -> [[Int]]
 sum_1_positions_distinct_from_minus_1 [] = []

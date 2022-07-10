@@ -195,7 +195,7 @@ sum_1_positions_distinct_from_minus_1 l = map sum_1_to_gz_list l
 
 sum_1_to_gz_list :: [Int] -> [Int]
 sum_1_to_gz_list [] = []
-sum_1_to_gz_list (x:xs) = (((\x -> if x > 0 then x+1 else x) x) : sum_1_to_gz_list xs)
+sum_1_to_gz_list (x:xs) = (((\x -> if x >= 0 then x+1 else x) x) : sum_1_to_gz_list xs)
 
 tryWhileNotGetValidHamBoard :: (Pos -> [[Int]]) -> [Pos] -> Int -> Int -> [[Int]]
 tryWhileNotGetValidHamBoard _ [] n m = (full_minus_1_matrix n m)
@@ -262,7 +262,7 @@ printList (x:xs) = (show x) ++ " " ++ (printList xs)
 
 validHidatoPositionsToDelete :: [[Int]] -> [Pos]
 validHidatoPositionsToDelete [] = []
-validHidatoPositionsToDelete board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length (board!!0))-1)], board!!i!!j /= -1, board!!i!!j /= 0, board!!i!!j /= maxValue] 
+validHidatoPositionsToDelete board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length (board!!0))-1)], board!!i!!j /= -1, board!!i!!j /= 1, board!!i!!j /= maxValue] 
     where maxValue = maxMat board
 
 positionsEqualTo0 :: [[Int]] -> [Pos]

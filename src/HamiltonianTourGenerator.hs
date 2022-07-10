@@ -16,9 +16,14 @@ generateSolvedHidato matrix n m p | (hamiltonian_path_board) == (full_minus_1_ma
 hamiltonianPath :: [[Int]] -> Int -> Int -> Pos -> [[Int]]
 hamiltonianPath matrix n m p | ( (not (isConnected matrix))) || matrix == (full_minus_1_matrix n m) = matrix
                             | (matrix!!(row p)!!(column p) == 0 && (number_positions_distinct_from_minus_1 matrix) == 1) = (sum_1_positions_distinct_from_minus_1 matrix) 
-                            | otherwise = (tryWhileNotGetValidHamBoard (hamiltonianPath newBoard n m) possibleAdyacents n m)
+                            | otherwise = (hamiltonianPathAux newBoard n m possibleAdyacents p)
                             where newBoard = (updateMatrix matrix (row p) (column p) (-1))
                                   possibleAdyacents = map covertListToPosition (adjacents_avaliable_single [(row p), (column p)] matrix dirs)
+
+hamiltonianPathAux ::  [[Int]] -> Int -> Int -> [Pos] -> Pos -> [[Int]]
+hamiltonianPathAux newBoard n m possibleAdyacents p | result == (full_minus_1_matrix n m) = (full_minus_1_matrix n m)
+                                                    | otherwise = sum_1_positions_distinct_from_minus_1 (updateMatrix result (row p) (column p) 0)
+                                                    where result = (tryWhileNotGetValidHamBoard (hamiltonianPath newBoard n m) possibleAdyacents n m)
 
 generateHidatoWithUniqueSolution :: Hidato -> Hidato
 generateHidatoWithUniqueSolution NilHidato = NilHidato

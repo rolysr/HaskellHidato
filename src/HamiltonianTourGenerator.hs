@@ -40,9 +40,7 @@ deletePositionRandomWhileUniqueSolution board positions | (length (solve newBoar
                                                               newPositions = deletePositionFrom positions newp
 
 tryGenerateSolvedHidato :: [[Int]] -> [Pos] -> [[Int]]
-tryGenerateSolvedHidato [] _ = []
-tryGenerateSolvedHidato matrix (p:ps) | length positions == 0 = full_minus_1_matrix (length matrix) (length (matrix!!0))
-                                                          | (board newBoard) /= (full_minus_1_matrix (length matrix) (length (matrix!!0))) = (board newBoard)
-                                                          | otherwise = tryGenerateSolvedHidato matrix ps
-                                                          where positions = validHidatoPositions matrix
-                                                                newBoard = (generateSolvedHidato matrix (length matrix) (length (matrix!!0)) p)
+tryGenerateSolvedHidato matrix [] = full_minus_1_matrix (length matrix) (length (matrix!!0))
+tryGenerateSolvedHidato matrix (p:ps)   | (board newBoard) /= (full_minus_1_matrix (length matrix) (length (matrix!!0))) = (board newBoard)
+                                        | otherwise = tryGenerateSolvedHidato matrix ps
+                                        where newBoard = (generateSolvedHidato matrix (length matrix) (length (matrix!!0)) p)

@@ -18,7 +18,7 @@ main = do
                 let{boardNM = full_k_matrix (read n) (read m) 0};  
                 let{equalTo0 = positionsEqualTo0 boardNM};
                 let{p = selectRandomPosFrom equalTo0};
-                let{solvedHidato = tryGenerateSolvedHidato boardNM (validHidatoPositions boardNM)};
+                let{solvedHidato = tryGenerateSolvedHidato boardNM (positionsEqualTo0 boardNM)};
                 if solvedHidato == (full_minus_1_matrix (read n) (read m)) 
                     then 
                         putStrLn "It's not possible to construct the Hidato"
@@ -36,7 +36,7 @@ main = do
             (n,m,boardNM) <- parse;
             let{equalTo0 = positionsEqualTo0 boardNM};
             let{p = selectRandomPosFrom equalTo0};
-            let{solvedHidato = tryGenerateSolvedHidato boardNM (validHidatoPositions boardNM)};
+            let{solvedHidato = tryGenerateSolvedHidato boardNM (positionsEqualTo0 boardNM)};
             if solvedHidato == (full_minus_1_matrix n m) 
                 then 
                     putStrLn "It's not possible to construct the Hidato"

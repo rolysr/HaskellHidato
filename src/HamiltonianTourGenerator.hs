@@ -2,6 +2,7 @@ module HamiltonianTourGenerator (
     generateSolvedHidato, 
     hamiltonianPath,
     generateHidatoWithUniqueSolution,
+    tryGenerateSolvedHidatoFromValidPositions,
 ) where
 import Utils
 import Solver

@@ -1,5 +1,6 @@
 module Utils (
     adjacent_positions,
+    positionsEqualTo0,
     trd3,
     trd4,
     trd5,
@@ -186,7 +187,7 @@ minimumGZ l | ((length newL) > 0) = (minimum newL)
 
 number_positions_distinct_from_minus_1 :: [[Int]] -> Int
 number_positions_distinct_from_minus_1 [] = 0
-number_positions_distinct_from_minus_1 matrix = sum (filter (>0) (map length (map (filter (>0)) matrix)))
+number_positions_distinct_from_minus_1 matrix = sum (filter (>=0) (map length (map (filter (>=0)) matrix)))
 
 sum_1_positions_distinct_from_minus_1 :: [[Int]] -> [[Int]]
 sum_1_positions_distinct_from_minus_1 [] = []
@@ -194,7 +195,7 @@ sum_1_positions_distinct_from_minus_1 l = map sum_1_to_gz_list l
 
 sum_1_to_gz_list :: [Int] -> [Int]
 sum_1_to_gz_list [] = []
-sum_1_to_gz_list (x:xs) = (((\x -> if x > 0 then x+1 else x) x) : sum_1_to_gz_list xs)
+sum_1_to_gz_list (x:xs) = (((\x -> if x >= 0 then x+1 else x) x) : sum_1_to_gz_list xs)
 
 tryWhileNotGetValidHamBoard :: (Pos -> [[Int]]) -> [Pos] -> Int -> Int -> [[Int]]
 tryWhileNotGetValidHamBoard _ [] n m = (full_minus_1_matrix n m)
@@ -253,7 +254,7 @@ adjacent_positions [x0,y0] [x1,y1] = (abs(x0-x1)<=1 && abs(y0-y1)<=1)
 
 printMatrix ::(Show a) => [[a]] -> [Char]
 printMatrix [] = ""
-printMatrix (x:xs) = printList x ++ "\n" ++ (printMatrix xs)
+printMatrix (x:xs) = (printList x) ++ "\n" ++ (printMatrix xs)
 
 printList :: (Show a) => [a] -> [Char]
 printList [] = ""
@@ -261,8 +262,12 @@ printList (x:xs) = (show x) ++ " " ++ (printList xs)
 
 validHidatoPositionsToDelete :: [[Int]] -> [Pos]
 validHidatoPositionsToDelete [] = []
-validHidatoPositionsToDelete board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length board)-1)], board!!i!!j /= -1, board!!i!!j /= 0, board!!i!!j /= maxValue] 
+validHidatoPositionsToDelete board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length (board!!0))-1)], board!!i!!j /= -1, board!!i!!j /= 1, board!!i!!j /= maxValue] 
     where maxValue = maxMat board
+
+positionsEqualTo0 :: [[Int]] -> [Pos]
+positionsEqualTo0 [] = []
+positionsEqualTo0 board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length (board!!0))-1)], board!!i!!j == 0] 
 
 seed::Int
 seed = 40
@@ -291,9 +296,8 @@ matrixToHidato a = Hidato {board = a,
 readMany :: Read a => IO [a]
 readMany = fmap (map read . words) getLine
 
-parse :: IO (Int, Int, [Int], [[Int]])
+parse :: IO (Int, Int, [[Int]])
 parse = do
     [m, n] <- readMany
-    ks     <- readMany
     xss    <- replicateM m readMany
-    return (m, n, ks, xss)
+    return (m, n, xss)

@@ -37,7 +37,7 @@ module Utils (
     full_k_matrix,
     printList,
     printMatrix,
-    validHidatoPositionsToDelete,
+    validHidatoPositions,
     selectRandomPosFrom,
     deletePositionFrom,
     matrixToHidato,
@@ -260,9 +260,9 @@ printList :: (Show a) => [a] -> [Char]
 printList [] = ""
 printList (x:xs) = (show x) ++ " " ++ (printList xs)
 
-validHidatoPositionsToDelete :: [[Int]] -> [Pos]
-validHidatoPositionsToDelete [] = []
-validHidatoPositionsToDelete board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length (board!!0))-1)], board!!i!!j /= -1, board!!i!!j /= 1, board!!i!!j /= maxValue] 
+validHidatoPositions :: [[Int]] -> [Pos]
+validHidatoPositions [] = []
+validHidatoPositions board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length (board!!0))-1)], board!!i!!j /= -1, board!!i!!j /= 1, board!!i!!j /= maxValue] 
     where maxValue = maxMat board
 
 positionsEqualTo0 :: [[Int]] -> [Pos]

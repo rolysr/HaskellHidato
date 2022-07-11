@@ -27,7 +27,7 @@ hamiltonianPathAux newBoard n m possibleAdyacents p | result == (full_minus_1_ma
 
 generateHidatoWithUniqueSolution :: Hidato -> Hidato
 generateHidatoWithUniqueSolution NilHidato = NilHidato
-generateHidatoWithUniqueSolution h = matrixToHidato ((deletePositionRandomWhileUniqueSolution (board h) positions)) where positions = validHidatoPositionsToDelete (board h)
+generateHidatoWithUniqueSolution h = matrixToHidato ((deletePositionRandomWhileUniqueSolution (board h) positions)) where positions = validHidatoPositions (board h)
 
 
 deletePositionRandomWhileUniqueSolution :: [[Int]] -> [Pos] -> [[Int]]
@@ -37,3 +37,9 @@ deletePositionRandomWhileUniqueSolution board positions | (length (solve newBoar
                                                         where newp = selectRandomPosFrom positions
                                                               newBoard = (updateMatrix board (row newp) (column newp) 0)
                                                               newPositions = deletePositionFrom positions newp
+
+tryGenerateSolvedHidatoFromValidPositions :: [[Int]] -> [Pos] -> [[Int]]
+tryGenerateSolvedHidatoFromValidPositions [] _ = []
+tryGenerateSolvedHidatoFromValidPositions board (p:ps) | length positions == 0 = full_minus_1_matrix (length board) (length board!!0)
+                                                          | (generateSolvedHidato board (length board) (length board!!0) p) /= full_minus_1_matrix = newBoard
+                                                          | otherwise = tryGenerateSolvedHidatoFromValidPositions board ps

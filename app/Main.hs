@@ -16,7 +16,7 @@ main = do
                 n <- getLine;
                 m <- getLine;
                 let{boardNM = full_k_matrix (read n) (read m) 0};  
-                let{solvedHidato = generateSolvedHidato boardNM};
+                let{solvedHidato = generateSolvedHidato boardNM (Pos 0 0)};
                 let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
                 putStrLn "The hidato unsolved that was generated is:\n"
                 putStrLn (printMatrix (board uniqueSolutionHidato))
@@ -28,7 +28,7 @@ main = do
         then do 
             putStrLn "Option 2 selected. Parsing the custom hidato from stdin..."
             boardNM    <- replicateM m readMany  
-            let{solvedHidato = generateSolvedHidato boardNM};
+            let{solvedHidato = generateSolvedHidato boardNM (Pos 0 0)};
             let{uniqueSolutionHidato = generateHidatoWithUniqueSolution solvedHidato};
             putStrLn "The parsed hidato unsolved that was generated is:\n"
             putStrLn (printMatrix (board uniqueSolutionHidato))

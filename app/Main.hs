@@ -34,8 +34,8 @@ main = do
         then do 
             putStrLn "Option 2 selected. Parsing the custom hidato from stdin..."
             (n,m,boardNM) <- parse;
-            let{distinctFrom0 = validHidatoPositions boardNM};
-            let{p = selectRandomPosFrom distinctFrom0};
+            let{equalTo0 = positionsEqualTo0 boardNM};
+            let{p = selectRandomPosFrom equalTo0};
             let{solvedHidato = generateSolvedHidato boardNM (length boardNM) (length (boardNM!!0)) p};
             if solvedHidato == full_minus_1_matrix n m 
                 then 

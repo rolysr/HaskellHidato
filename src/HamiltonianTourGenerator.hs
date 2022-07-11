@@ -31,7 +31,7 @@ generateHidatoWithUniqueSolution h = matrixToHidato ((deletePositionRandomWhileU
 
 
 deletePositionRandomWhileUniqueSolution :: [[Int]] -> [Pos] -> [[Int]]
-deletePositionRandomWhileUniqueSolution [] _ = []
+deletePositionRandomWhileUniqueSolution board [] = board
 deletePositionRandomWhileUniqueSolution board positions | (length (solve newBoard) == 1) = (deletePositionRandomWhileUniqueSolution newBoard newPositions)
                                                         | otherwise = board
                                                         where newp = selectRandomPosFrom positions

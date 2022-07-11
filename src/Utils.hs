@@ -260,9 +260,10 @@ printList :: (Show a) => [a] -> [Char]
 printList [] = ""
 printList (x:xs) = (show x) ++ " " ++ (printList xs)
 
-validHidatoPositions :: [[Int]] -> [Pos]
-validHidatoPositions [] = []
-validHidatoPositions board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length (board!!0))-1)], board!!i!!j /= -1, board!!i!!j /= 1, board!!i!!j /= maxValue] 
+
+validHidatoPositionsToDelete :: [[Int]] -> [Pos]
+validHidatoPositionsToDelete [] = []
+validHidatoPositionsToDelete board = [Pos i j | i <- [0..((length board)-1)], j <- [0..((length (board!!0))-1)], board!!i!!j /= -1, board!!i!!j /= 0, board!!i!!j /= 1, board!!i!!j /= maxValue] 
     where maxValue = maxMat board
 
 positionsEqualTo0 :: [[Int]] -> [Pos]

@@ -1,2 +1,2 @@
 # HaskellHidato
- Haskell project for generate and solve arbitrary hidato puzzles
+ Haskell project for generating and solving arbitrary hidato puzzles
